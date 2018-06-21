@@ -32,7 +32,7 @@ public class RecommendItem extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*1 return a list of fake data*/
+		/*1 : return a list of fake data
 		response.setContentType("application/json");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
@@ -57,6 +57,17 @@ public class RecommendItem extends HttpServlet {
 		}
 		out.print(array);
 		out.close();
+		*/
+		
+		/*2 use RpcHelper to write JSONArray*/
+		JSONArray array = new JSONArray();
+		try {
+			array.put(new JSONObject().put("username", "abcd"));
+			array.put(new JSONObject().put("username", "1234"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		RpcHelper.writeJsonArray(response, array);
 	}
 
 	/**

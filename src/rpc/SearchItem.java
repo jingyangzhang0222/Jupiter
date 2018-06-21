@@ -34,7 +34,7 @@ public class SearchItem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		/* 1 print username + "hell"
+		/* 1 print username + "hello"
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		// Create a PrintWriter from response such that we can add data to response.
 		PrintWriter out = response.getWriter();
@@ -79,7 +79,7 @@ public class SearchItem extends HttpServlet {
 		out.close();
 		*/
 
-		/*4 a list of fake user names*/
+		/*4 a list of fake user names
 		response.setContentType("application/json");
 		response.addHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
@@ -93,6 +93,17 @@ public class SearchItem extends HttpServlet {
 		}
 		out.print(array);
 		out.close();
+		*/
+		
+		/*5 use RpcHelper to write JSONArray*/
+		JSONArray array = new JSONArray();
+		try {
+			array.put(new JSONObject().put("username", "abcd"));
+			array.put(new JSONObject().put("username", "1234"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		RpcHelper.writeJsonArray(response, array);
 	}
 
 	/**
