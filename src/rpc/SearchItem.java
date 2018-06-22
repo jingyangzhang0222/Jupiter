@@ -2,6 +2,9 @@ package rpc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import entity.Item;
+import external.TicketMasterAPI;
 
 /**
  * Servlet implementation class SearchItem
@@ -95,12 +101,40 @@ public class SearchItem extends HttpServlet {
 		out.close();
 		*/
 		
-		/*5 use RpcHelper to write JSONArray*/
+		/*5 use RpcHelper to write JSONArray
 		JSONArray array = new JSONArray();
 		try {
 			array.put(new JSONObject().put("username", "abcd"));
 			array.put(new JSONObject().put("username", "1234"));
 		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		RpcHelper.writeJsonArray(response, array);
+		*/
+		
+		/*6 use the TicketMasterAPI
+		 *  use RpcHelper to write JSONArray
+		 * */
+		double lat = Double.parseDouble(request.getParameter("lat"));
+		double lon = Double.parseDouble(request.getParameter("lon"));
+		
+		// term can be empty or null.
+		String term = request.getParameter("term");
+		
+		TicketMasterAPI tmAPI = new TicketMasterAPI();
+		List<Item> items = tmAPI.search(lat, lon, term);
+		JSONArray array = new JSONArray();
+		
+		// sort by distance
+		//Collections.sort(items, new MyComparator());
+		
+		try {
+			for (Item item : items) {
+				// Add a thin version of item object
+				JSONObject obj = item.toJSONObject();
+				array.put(obj);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		RpcHelper.writeJsonArray(response, array);
@@ -115,5 +149,18 @@ public class SearchItem extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+	
+	/*
+	static class MyComparator implements Comparator<Item>{
+		@Override
+		public int compare(Item i1, Item i2) {
+			if (i1.getDistance() < i2.getDistance()) {
+				return -1;
+			} else if (i1.getDistance() > i2.getDistance()) {
+				return 1;
+			}
+			return 0;
+		}
+	}
+	*/
 }

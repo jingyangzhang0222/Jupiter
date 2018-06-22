@@ -121,6 +121,8 @@ public class Item {
 		return obj;
 	}
 
+	// inner: to call private Constructor of Item
+	// static: ...
 	public static class ItemBuilder {
 		private String itemId;
 		private String name;
