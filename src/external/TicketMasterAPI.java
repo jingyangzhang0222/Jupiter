@@ -103,7 +103,7 @@ public class TicketMasterAPI {
 	// }
 	
 	private String getAddress(JSONObject event) throws JSONException {
-		if (!event.isNull("_embeedded")) {
+		if (!event.isNull("_embedded")) {
 			JSONObject embedded = event.getJSONObject("_embedded");
 			
 			if (!embedded.isNull("venues")) {
@@ -129,6 +129,7 @@ public class TicketMasterAPI {
 						}
 						
 						sb.append(',');
+						sb.append(' ');
 					}
 					
 					if (!venue.isNull("city")) {
@@ -137,11 +138,10 @@ public class TicketMasterAPI {
 							sb.append(city.getString("name"));
 						}
 					}
-					
 					return sb.toString();
 				}
 			}
-		}
+		}	
 		return null;
 	}
 
@@ -231,7 +231,7 @@ public class TicketMasterAPI {
 	 *                      ↓
 	 *                  Item List
 	 *                      ↓
-	 *                 JSON Objects	               
+	 *               new JSON Objects      
 	 * }
 	 * for debugging
 	 */
@@ -257,6 +257,7 @@ public class TicketMasterAPI {
 		// London, UK
 		// tmApi.queryAPI(51.503364, -0.12);
 		// Houston, TX
+		// http://localhost:8080/Jupiter/search?lat=40.7128&lon=-74.0060
 		tmApi.queryAPI(29.682684, -95.295410);
 	}
 }

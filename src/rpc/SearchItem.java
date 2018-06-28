@@ -16,6 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import db.DBConnection;
+import db.DBConnectionFactory;
 import entity.Item;
 import external.TicketMasterAPI;
 
@@ -121,10 +123,11 @@ public class SearchItem extends HttpServlet {
 		// term can be empty or null.
 		String term = request.getParameter("term");
 		
-		TicketMasterAPI tmAPI = new TicketMasterAPI();
-		List<Item> items = tmAPI.search(lat, lon, term);
-		JSONArray array = new JSONArray();
+		//get a DataBase Connection
+		DBConnection connection = DBConnectionFactory.getDBConnection();
+		List<Item> items = connection.searchItems(lat, lon, term);
 		
+		JSONArray array = new JSONArray();
 		// sort by distance
 		//Collections.sort(items, new MyComparator());
 		
@@ -138,6 +141,8 @@ public class SearchItem extends HttpServlet {
 			e.printStackTrace();
 		}
 		RpcHelper.writeJsonArray(response, array);
+		
+		connection.close();
 	}
 
 	/**
