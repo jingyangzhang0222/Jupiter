@@ -166,7 +166,7 @@ public class MySQLConnection implements DBConnection {
 			String sql = "SELECT category from categories WHERE item_id = ?";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setString(1, itemId);
-			
+
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				categories.add(rs.getString("category"));
@@ -238,12 +238,59 @@ public class MySQLConnection implements DBConnection {
 		if (conn == null) {
 			return null;
 		}
-		return null;
+		String fullName = "";
+		try {
+			String sql = "SELECT first_name, last_name from users WHERE user_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				fullName += rs.getString("first_name");
+				fullName += " " + rs.getString("last_name");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return fullName;
 	}
 
 	@Override
 	public boolean verifyLogin(String userId, String password) {
-		// TODO Auto-generated method stub
+		if (conn == null || password == null) {
+			return false;
+		}
+		/* my solution
+		String passwordInDB = null;
+		
+		try {
+			String sql = "SELECT password from users WHERE user_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				passwordInDB = rs.getString("password");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return password.equals(passwordInDB);
+		*/
+		
+		/* better*/
+		try {
+			String sql = "SELECT user_id from users WHERE user_id = ? and password = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setString(1, userId);
+			statement.setString(2, password);
+			ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return false;
 	}
 }

@@ -28,7 +28,6 @@ public class MySQLTableCreation {
 
 			if (conn == null) return;
 			
-			
 			// Step 2, Drop table
 			/*
 			 * Syntax for DROP:
@@ -49,9 +48,6 @@ public class MySQLTableCreation {
 			//sql = "DROP TABLE IF EXISTS items";
 			stmt.executeUpdate("DROP TABLE IF EXISTS items");
 
-			
-			
-			
 			// Step 3. Create new tables.
 			/*
 			 * 
@@ -78,10 +74,6 @@ public class MySQLTableCreation {
 					+ " PRIMARY KEY (user_id, item_id)," + "FOREIGN KEY (item_id) REFERENCES items(item_id),"
 					+ "FOREIGN KEY (user_id) REFERENCES users(user_id))";
 			stmt.executeUpdate(sql);
-
-			
-			
-			
 			
 			// Step 4: insert data
 			// Create a fake user
