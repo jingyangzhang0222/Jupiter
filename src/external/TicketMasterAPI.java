@@ -54,7 +54,7 @@ public class TicketMasterAPI {
 			// returned directly
 			// response body is saved in InputStream of connection.
 			int responseCode = connection.getResponseCode();
-			System.out.println("\nSending 'GET' request to URL : " + URL + "?" + query);
+			System.out.println("\nSending 'GET' request to Ticket Master");
 			System.out.println("Response Code : " + responseCode);
 			
 			// Now read response body to get events data
