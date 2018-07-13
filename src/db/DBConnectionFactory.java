@@ -4,8 +4,8 @@ import db.mongodb.MongoDBConnection;
 import db.mysql.MySQLConnection;
 
 public class DBConnectionFactory {
-	private static final String DEFAULT_DB_TYPE = "mongodb";
-    //private static final String DEFAULT_DB_TYPE = "mysql";
+	//private static final String DEFAULT_DB_TYPE = "mongodb";
+    private static final String DEFAULT_DB_TYPE = "mysql";
 	public static DBConnection getDBConnection(String db) {
 		switch(db) {
 		case "mysql": 
