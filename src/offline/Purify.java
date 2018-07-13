@@ -28,8 +28,7 @@ public class Purify {
 			String line = null;
 			while ((line = bufferedReader.readLine()) != null) {
 				// Sample input:
-				// 73.223.210.212 - - [19/Aug/2017:22:00:24 +0000] "GET
-				// /Titan/history?user_id=1111 HTTP/1.1" 200 11410
+				// 73.223.210.212 - - [19/Aug/2017:22:00:24 +0000] "GET/Titan/history?user_id=1111 HTTP/1.1" 200 11410
 				List<String> values = Arrays.asList(line.split(" "));
 
 				String ip = values.size() > 0 ? values.get(0) : null;
